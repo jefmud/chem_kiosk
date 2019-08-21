@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <p></p>
+    <div class="card">
+        <div class="container">
+            <center>
+                <h1 class="card-title">Kiosk Control</h1>
+                <form action="{{url_for('file_view')}}">
+                    <div class="form-group"><button type="submit" class="btn btn-primary">Kiosk File Management</button></div>
+                </form>
+                
+                <form action="{{url_for('restart_video')}}">
+                    <div class="form-group"><button type="submit" class="btn btn-warning">Start/Restart Video Stream</button></div>
+                </form>
+        
+                <form action="{{url_for('stop_video')}}">
+                    <div class="form-group"><button type="submit" class="btn btn-danger">Stop Video Stream</button></div>
+                </form>
+            </center>
+        </div>
+    </div>
+{% endblock %}

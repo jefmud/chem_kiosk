@@ -1,0 +1,50 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <h1>Kiosk Files</h1>
+
+    <div class="card">
+        <div class="container">
+            <h5 class="card-title"></h5>
+            <form action="{{url_for('index')}}">
+                    <div class="form-group">
+                            <button class="btn btn-success" type="submit">Return to Kiosk Control</button>
+                    </div>
+            </form>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="card">
+        <div class="container">
+            <h5 class="card-title">Upload New File</h5>
+            <form action="{{url_for('upload_video')}}">
+                <div class="form-group">
+                        <button class="btn btn-primary" type="submit">Upload New File</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="card">
+        <div class="container">
+                <h5 class="card-title">Current Files</h5>
+            <form action="{{url_for('file_delete')}}" method="POST">
+                <table class="table table-sm">
+                    <thead>
+                        <tr><th>action</th><th>file</th></tr>
+                    </thead>
+                    {% for fname in file_list %}
+                        <tr><td><input type="checkbox" name="{{fname}}"> Delete</td><td>{{fname}}</td></tr>
+                    {% endfor %}
+                </table>
+                <div class="form-group">
+                    <button class="btn btn-danger" type="submit">Remove Selected Files</button>
+                </div>
+            </form>
+        </div>
+    </div>
+        
+{% endblock %}
