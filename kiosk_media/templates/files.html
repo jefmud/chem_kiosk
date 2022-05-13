@@ -34,14 +34,19 @@
             <form action="{{url_for('file_delete')}}" method="POST">
                 <table class="table table-sm">
                     <thead>
-                        <tr><th>action</th><th>file</th></tr>
+                        <tr><th>order</th><th>file</th><th>remove</th></tr>
                     </thead>
-                    {% for fname in file_list %}
-                        <tr><td><input type="checkbox" name="{{fname}}"> Delete</td><td>{{fname}}</td></tr>
+                    {% for idx, fname in file_list %}
+                        <tr>
+                            <td><input type="text" name="@{{fname}}" value="{{idx}}"></td>
+                            <td>{{fname}}</td>
+                            <td><input type="checkbox" name="{{fname}}"> Delete</td>
+                        </tr>
                     {% endfor %}
                 </table>
                 <div class="form-group">
-                    <button class="btn btn-danger" type="submit">Remove Selected Files</button>
+                    <button class="btn btn-warning" type="submit" name="command" value="reorder">Reorder Files</button>
+                    <button class="btn btn-danger" type="submit" name="command" value="delete">Delete Checked Files</button>
                 </div>
             </form>
         </div>
