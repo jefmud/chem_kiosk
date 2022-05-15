@@ -2,6 +2,7 @@
 from werkzeug.security import generate_password_hash, check_password_hash
 import json
 import os
+import random
 
 users_fname = None
 
@@ -9,7 +10,7 @@ def json_read(fname):
     try:
         with open(fname) as fp:
             data = fp.read()
-    except FileNotFoundError:
+    except:
         return {}
 
     try:
@@ -41,6 +42,16 @@ def user_add(username, password):
     json_write(users, fname)
     return True
 
+def user_del(username):
+    """deactivate user"""
+    users = json_read(fname)
+    try:
+        del users[username]
+        return True
+    except:
+        pass
+    return False
+    
 def check_login(username, password):
     fname = get_users_fname()
     users = json_read(fname)
@@ -50,5 +61,11 @@ def check_login(username, password):
             return True
     return False
 
-secret_key = 'NotSoSecret'
+def authenticate(token):
+    if token == signature:
+        return True
+    return False
+
+secret_key = 'EUD87sh&9ehis$64A2(*sA'
 development = False
+signature = secret_key

@@ -9,8 +9,8 @@ if '@' in email:
         email = email.strip()
         password = password.strip()
         config.user_add(email, password)
-        print "email {} was added with password.".format(email)
+        print("email {} was added with password.".format(email))
     else:
-       print "Password was too short. Aborting."
+       print("Password was too short. Aborting.")
 else:
     print("Aborting")

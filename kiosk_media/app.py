@@ -61,6 +61,7 @@ def file_delete():
     """handle file deletion from form"""
     if not config.authenticate(session.get('auth_token')):
         fail()
+    
     command = request.form.get('command')
     if command == 'reorder':
         items = request.form
@@ -124,13 +125,16 @@ def restart_video():
 
 
 def allowed_file(filename):
-  """return True if filename is allowed for upload, False if not allowed"""
-  return '.' in filename and \
+    """return True if filename is allowed for upload, False if not allowed"""
+    return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 def save_file(file):
     """save the file to the proper location, rename if necessary"""
-
+    # check if user is logged in and session is authentic
+    if not config.authenticate( session.get('auth_token') ):
+        fail()
+    
     # sanitize the filename
     filename = secure_filename(file.filename)
     pathname = os.path.join(app.config['UPLOAD_FOLDER'], filename)
@@ -167,7 +171,7 @@ def save_file(file):
 @app.route('/files')
 def file_view():
     if not config.authenticate(session.get('auth_token')):
-        fail()
+        return fail()
 
     """render the file upload form"""
     # session['no_csrf'] = True
@@ -197,6 +201,8 @@ def upload_video():
         return res
 
     return render_template("upload_video.html")
+
+
 @app.route('/_token_/<token>')
 def token_check(token):
     if config.authenticate(token):
@@ -207,6 +213,5 @@ def token_check(token):
     fail()
     
 
-if __name__ == '__main__':
-    config.user_add('admin@admin.com','_admin_')
+if __name__ == '__main__':        
     app.run(port=5000, host='0.0.0.0')
